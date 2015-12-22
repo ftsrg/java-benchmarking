@@ -2,26 +2,19 @@ package hu.bme.mit.mabel.engine;
 
 import com.google.common.base.Stopwatch;
 
-public class PhaseRunner {
+public class PhaseRunner<TPhase extends Phase<TDataToken>, TDataToken extends DataToken<? extends BenchmarkConfiguration, ? extends BenchmarkData, ? extends BenchmarkResults>> {
 
-	protected final Phase phase;
+	protected final TPhase phase;
 
-	private PhaseRunner(final Phase phase) {
+	public PhaseRunner(final TPhase phase) {
 		this.phase = phase;
 	}
 
-	public static PhaseRunner newInstance(final Class<? extends Phase> phaseClass, final DataToken token) throws InstantiationException, IllegalAccessException {		
-		final Phase phase = phaseClass.newInstance();
-		phase.init(token);
-
-		final PhaseRunner phaseRunner = new PhaseRunner(phase);
-		return phaseRunner;
-	}
-
-	public void run() {
+	public final void run() {
 		final Stopwatch stopwatch = Stopwatch.createStarted();
 		phase.run();
 		stopwatch.stop();
+		// final long elapsed = stopwatch.elapsed(TimeUnit.NANOSECONDS);
 	}
 
 }

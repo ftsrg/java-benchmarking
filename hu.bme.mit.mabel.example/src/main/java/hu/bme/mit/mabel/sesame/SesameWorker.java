@@ -32,20 +32,19 @@ public class SesameWorker {
 		final long elapsedInit = stopwatchInit.elapsed(TimeUnit.NANOSECONDS);
 		System.out.println(String.format("%s,%d,Init,%d", vmargs, run, elapsedInit));
 
-
 		// load
 		final Stopwatch stopwatchLoad = Stopwatch.createStarted();
 		connection.add(modelFile, null, RDFFormat.NTRIPLES);
 		final long elapsedLoad = stopwatchLoad.elapsed(TimeUnit.NANOSECONDS);
 		System.out.println(String.format("%s,%d,Load,%d", vmargs, run, elapsedLoad));
 
-		
 		// query
-		final Stopwatch stopwatchQuery= Stopwatch.createStarted();
+		final Stopwatch stopwatchQuery = Stopwatch.createStarted();
 		final TupleQuery tupleQuery = connection.prepareTupleQuery(QueryLanguage.SPARQL, query);
 		try (TupleQueryResult queryResults = tupleQuery.evaluate()) {
 			while (queryResults.hasNext()) {
 				final BindingSet bs = queryResults.next();
+				System.out.println(bs);
 			}
 		}
 		final long elapsedQuery = stopwatchQuery.elapsed(TimeUnit.NANOSECONDS);
