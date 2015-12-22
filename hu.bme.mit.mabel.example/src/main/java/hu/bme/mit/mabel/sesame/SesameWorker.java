@@ -1,4 +1,4 @@
-package hu.bme.mit.mabel.example;
+package hu.bme.mit.mabel.sesame;
 
 import java.io.File;
 import java.io.IOException;
@@ -16,7 +16,7 @@ import org.openrdf.sail.memory.MemoryStore;
 
 import com.google.common.base.Stopwatch;
 
-public class Worker {
+public class SesameWorker {
 
 	public void work(final String vmargs, final int run) throws IOException {
 		final File modelFile = new File("src/main/resources/infoboxproperties_en.nt");

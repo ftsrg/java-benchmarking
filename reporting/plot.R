@@ -12,4 +12,3 @@ ggplot(results) +
   scale_y_continuous() +
   theme_bw() +
   theme(legend.key = element_blank(), legend.title = element_blank(), legend.position = "bottom")
-
