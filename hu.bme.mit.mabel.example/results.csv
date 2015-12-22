@@ -1,0 +1,7 @@
+VmArgs,Run,Phase,Time
+Base,1,Init,50681637
+Base,1,Load,1123070880
+Base,1,Query,212191202
+server-TieredCompilation-CompileThreshold=1,1,Init,50758017
+server-TieredCompilation-CompileThreshold=1,1,Load,1132981380
+server-TieredCompilation-CompileThreshold=1,1,Query,228861940
