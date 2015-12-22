@@ -4,19 +4,25 @@ import hu.bme.mit.mabel.engine.BenchmarkConfiguration;
 
 public class PrimesConfiguration extends BenchmarkConfiguration {
 
-	protected int n;
+	protected final int runs;
+	protected final int numberOfCompositeNumbers;
 	private final int min;
 	private final int max;
 	
-	public PrimesConfiguration(final int n, final int min, final int max) {
+	public PrimesConfiguration(final int runs, final int numberOfCompositeNumbers, final int min, final int max) {
 		super();
-		this.n = n;
+		this.runs = runs;
+		this.numberOfCompositeNumbers = numberOfCompositeNumbers;
 		this.min = min;
 		this.max = max;
 	}
 
-	public int getN() {
-		return n;
+	public int getRuns() {
+		return runs;
+	}
+	
+	public int getNumberOfCompositeNumbers() {
+		return numberOfCompositeNumbers;
 	}
 	
 	public int getMin() {
@@ -25,6 +31,6 @@ public class PrimesConfiguration extends BenchmarkConfiguration {
 	
 	public int getMax() {
 		return max;
-	}	
+	}
 	
 }

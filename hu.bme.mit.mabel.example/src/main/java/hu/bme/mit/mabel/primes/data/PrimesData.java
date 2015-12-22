@@ -17,7 +17,7 @@ public class PrimesData extends BenchmarkData {
 	}
 
 	public static PrimesData create(final PrimesConfiguration configuration) {
-		return new PrimesData(configuration.getN());
+		return new PrimesData(configuration.getNumberOfCompositeNumbers());
 	}
 
 	public List<Integer> getPrimes() {

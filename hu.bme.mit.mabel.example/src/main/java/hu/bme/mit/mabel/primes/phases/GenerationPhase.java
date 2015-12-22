@@ -29,7 +29,7 @@ public class GenerationPhase extends Phase<PrimesDataToken> {
 		final RandomDataGenerator randomDataGenerator = new RandomDataGenerator(randomGenerator);
 
 		final PrimesConfiguration configuration = dataToken.getConfiguration();
-		final int numberOfPrimes = configuration.getN() * 2;
+		final int numberOfPrimes = configuration.getNumberOfCompositeNumbers() * 2;
 		for (int i = 0; i < numberOfPrimes; i++) {
 			do {
 				final int x = randomDataGenerator.nextInt(MIN, MAX);
