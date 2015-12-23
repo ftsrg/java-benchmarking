@@ -23,7 +23,6 @@ public class Results {
 		for (final Metric<?> metric : metrics) {
 			results += metric.toString() + "\n";
 		}
-		
 		return results;
 	}
 	

@@ -4,8 +4,8 @@ import hu.bme.mit.mabel.engine.Phase;
 
 public class TimeMetric extends Metric<Long> {
 
-	public TimeMetric(final Phase<?> phase, final int id, final Long value) {
-		super(phase, id, value);
+	public TimeMetric(final int run, final Phase<?> phase, final int id, final Long value) {
+		super(run, phase, id, value);
 	}
 
 	@Override

@@ -31,7 +31,7 @@ public abstract class Phase<TDataToken extends DataToken<? extends Configuration
 	public void finish() {
 		stopwatch.stop();
 		final long elapsed = stopwatch.elapsed(TimeUnit.NANOSECONDS);
-		final TimeMetric metric = new TimeMetric(this, 0, elapsed);
+		final TimeMetric metric = new TimeMetric(0, this, 0, elapsed);
 		dataToken.getResults().recordMetric(metric);
 	}
 
