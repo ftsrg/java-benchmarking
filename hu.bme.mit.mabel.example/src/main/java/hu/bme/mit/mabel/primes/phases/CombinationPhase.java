@@ -3,8 +3,8 @@ package hu.bme.mit.mabel.primes.phases;
 import java.util.List;
 
 import hu.bme.mit.mabel.engine.Phase;
-import hu.bme.mit.mabel.primes.data.PrimesData;
 import hu.bme.mit.mabel.primes.data.PrimesDataToken;
+import hu.bme.mit.mabel.primes.data.PrimesPayload;
 
 public class CombinationPhase extends Phase<PrimesDataToken> {
 	
@@ -14,7 +14,7 @@ public class CombinationPhase extends Phase<PrimesDataToken> {
 
 	@Override
 	public void run() {
-		final PrimesData data = dataToken.getData();
+		final PrimesPayload data = dataToken.getPayload();
 		final List<Integer> primes = data.getPrimes();
 		final List<Long> combined = data.getCombined();
 

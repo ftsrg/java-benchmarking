@@ -5,6 +5,7 @@ import java.util.List;
 
 import hu.bme.mit.mabel.primes.PrimesPhase;
 import hu.bme.mit.mabel.primes.data.PrimesDataToken;
+import hu.bme.mit.mabel.primes.data.PrimesPayload;
 
 public class FactorizationPhase extends PrimesPhase {
 
@@ -14,10 +15,11 @@ public class FactorizationPhase extends PrimesPhase {
 
 	@Override
 	public void run() {
-		final List<Long> combined = dataToken.getData().getCombined();
+		final PrimesPayload data = dataToken.getPayload();
 
-		for (final Long x : combined) {
+		for (final Long x : data.getCombined()) {
 			final List<Integer> factors = factors(x);
+			data.getFactorized().addAll(factors);
 		}
 
 	}
@@ -31,6 +33,8 @@ public class FactorizationPhase extends PrimesPhase {
 				x /= i;
 			}
 		}
+		
+		log("Factors: " + factors);
 		return factors;
 	}
 

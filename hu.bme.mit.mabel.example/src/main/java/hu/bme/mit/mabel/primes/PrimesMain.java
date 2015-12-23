@@ -2,12 +2,13 @@ package hu.bme.mit.mabel.primes;
 
 import hu.bme.mit.mabel.engine.PhaseRunner;
 import hu.bme.mit.mabel.primes.data.PrimesConfiguration;
-import hu.bme.mit.mabel.primes.data.PrimesData;
 import hu.bme.mit.mabel.primes.data.PrimesDataToken;
+import hu.bme.mit.mabel.primes.data.PrimesPayload;
 import hu.bme.mit.mabel.primes.data.PrimesResults;
 import hu.bme.mit.mabel.primes.phases.CombinationPhase;
 import hu.bme.mit.mabel.primes.phases.FactorizationPhase;
 import hu.bme.mit.mabel.primes.phases.GenerationPhase;
+import hu.bme.mit.mabel.primes.phases.TestPhase;
 
 public class PrimesMain {
 
@@ -18,11 +19,16 @@ public class PrimesMain {
 		}
 
 		final int runs = Integer.parseInt(args[0]);
+		final boolean verbose = false;
+		// final int max = Integer.MAX_VALUE;
+		final int max = 1000;
+		final int min = max / 2;
+		final int numberOfCompositeNumbers = 1;
 
-		final PrimesConfiguration configuration = new PrimesConfiguration(runs, 1, Integer.MAX_VALUE / 2, Integer.MAX_VALUE);
+		final PrimesConfiguration configuration = new PrimesConfiguration(runs, verbose, numberOfCompositeNumbers, min, max);
 
 		for (int run = 1; run <= configuration.getRuns(); run++) {
-			final PrimesData data = PrimesData.create(configuration);
+			final PrimesPayload data = PrimesPayload.create(configuration);
 			final PrimesResults results = new PrimesResults();
 			final PrimesDataToken dataToken0 = new PrimesDataToken(configuration, data, results);
 
@@ -43,8 +49,14 @@ public class PrimesMain {
 			final PhaseRunner<FactorizationPhase, PrimesDataToken> factorizationRunner = new PhaseRunner<>(factorizationPhase);
 			factorizationRunner.run();
 			final PrimesDataToken dataToken3 = generationPhase.getDataToken();
-			
-			System.out.println(dataToken3.getResults());
+
+			// test
+			final TestPhase testPhase = new TestPhase(dataToken3);
+			final PhaseRunner<TestPhase, PrimesDataToken> testRunner = new PhaseRunner<>(testPhase);
+			testRunner.run();
+			final PrimesDataToken dataToken4 = generationPhase.getDataToken();
+
+			System.out.print(dataToken4.getResults());
 		}
 	}
 

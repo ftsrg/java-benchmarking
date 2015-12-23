@@ -12,10 +12,7 @@ import hu.bme.mit.mabel.primes.data.PrimesDataToken;
 
 public class GenerationPhase extends Phase<PrimesDataToken> {
 
-	// TODO: make these part of the configuration token as well
 	protected final long SEED = 42;
-	protected final int MAX = Integer.MAX_VALUE;
-	protected final int MIN = MAX / 2;
 
 	public GenerationPhase(final PrimesDataToken token) {
 		super(token);
@@ -23,16 +20,17 @@ public class GenerationPhase extends Phase<PrimesDataToken> {
 
 	@Override
 	public void run() {
-		final List<Integer> primes = dataToken.getData().getPrimes();
-
+		final PrimesConfiguration configuration = dataToken.getConfiguration();
+		final List<Integer> primes = dataToken.getPayload().getPrimes();
+		
+		
 		final RandomGenerator randomGenerator = new MersenneTwister(SEED);
 		final RandomDataGenerator randomDataGenerator = new RandomDataGenerator(randomGenerator);
 
-		final PrimesConfiguration configuration = dataToken.getConfiguration();
 		final int numberOfPrimes = configuration.getNumberOfCompositeNumbers() * 2;
 		for (int i = 0; i < numberOfPrimes; i++) {
 			do {
-				final int x = randomDataGenerator.nextInt(MIN, MAX);
+				final int x = randomDataGenerator.nextInt(configuration.getMin(), configuration.getMax());
 				if (isPrime(x)) {
 					primes.add(x);
 					break;
@@ -40,7 +38,7 @@ public class GenerationPhase extends Phase<PrimesDataToken> {
 			} while (true);
 		}
 
-		System.out.println("Generated " + primes.size() + " primes");
+		log("Generated " + primes.size() + " primes: " + primes);
 	}
 
 	/**

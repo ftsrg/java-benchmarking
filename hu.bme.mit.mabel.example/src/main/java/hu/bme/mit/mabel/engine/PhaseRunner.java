@@ -1,8 +1,11 @@
 package hu.bme.mit.mabel.engine;
 
-import com.google.common.base.Stopwatch;
+import hu.bme.mit.mabel.data.Configuration;
+import hu.bme.mit.mabel.data.DataToken;
+import hu.bme.mit.mabel.data.Payload;
+import hu.bme.mit.mabel.data.Results;
 
-public class PhaseRunner<TPhase extends Phase<TDataToken>, TDataToken extends DataToken<? extends BenchmarkConfiguration, ? extends BenchmarkData, ? extends BenchmarkResults>> {
+public class PhaseRunner<TPhase extends Phase<TDataToken>, TDataToken extends DataToken<? extends Configuration, ? extends Payload, ? extends Results>> {
 
 	protected final TPhase phase;
 
@@ -11,10 +14,10 @@ public class PhaseRunner<TPhase extends Phase<TDataToken>, TDataToken extends Da
 	}
 
 	public final void run() {
-		final Stopwatch stopwatch = Stopwatch.createStarted();
+		phase.init();
 		phase.run();
-		stopwatch.stop();
-		// final long elapsed = stopwatch.elapsed(TimeUnit.NANOSECONDS);
+		phase.finish();
 	}
+	
 
 }
