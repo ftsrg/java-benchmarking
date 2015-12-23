@@ -27,9 +27,9 @@ public class PrimesMain {
 
 		final PrimesConfiguration configuration = new PrimesConfiguration(runs, verbose, numberOfCompositeNumbers, min, max);
 
+		final PrimesResults results = new PrimesResults();
 		for (int run = 1; run <= configuration.getRuns(); run++) {
 			final PrimesPayload data = PrimesPayload.create(configuration);
-			final PrimesResults results = new PrimesResults();
 			final PrimesDataToken dataToken0 = new PrimesDataToken(configuration, data, results);
 
 			// generation
@@ -54,10 +54,8 @@ public class PrimesMain {
 			final TestPhase testPhase = new TestPhase(dataToken3);
 			final PhaseRunner<TestPhase, PrimesDataToken> testRunner = new PhaseRunner<>(testPhase);
 			testRunner.run();
-			final PrimesDataToken dataToken4 = generationPhase.getDataToken();
-
-			System.out.print(dataToken4.getResults());
 		}
+		System.out.print(results);
 	}
 
 }

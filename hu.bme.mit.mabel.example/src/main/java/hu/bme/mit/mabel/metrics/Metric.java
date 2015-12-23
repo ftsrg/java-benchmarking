@@ -39,4 +39,8 @@ public abstract class Metric<TValue> {
 		return String.format("%d,%d,%s,%s,%d", run, id, phase.getName(), getName(), value);
 	}
 
+	public static String getHeader() {
+		return "Run,Id,Phase,Metric,Value\n";
+	}
+
 }

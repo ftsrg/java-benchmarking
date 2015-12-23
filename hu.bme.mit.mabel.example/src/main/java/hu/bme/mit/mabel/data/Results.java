@@ -19,7 +19,7 @@ public class Results {
 	
 	@Override
 	public String toString() {
-		String results = "";
+		String results = Metric.getHeader();
 		for (final Metric<?> metric : metrics) {
 			results += metric.toString() + "\n";
 		}

@@ -17,7 +17,6 @@ public class PhaseRunner<TPhase extends Phase<TDataToken>, TDataToken extends Da
 		phase.init();
 		phase.run();
 		phase.finish();
-	}
-	
+	}	
 
 }
