@@ -1,15 +1,14 @@
 package hu.bme.mit.mabel.primes;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.kohsuke.args4j.CmdLineException;
 
+import hu.bme.mit.mabel.data.Results;
 import hu.bme.mit.mabel.engine.PhaseRunner;
 import hu.bme.mit.mabel.engine.WorkflowRunner;
 import hu.bme.mit.mabel.primes.data.PrimesConfiguration;
-import hu.bme.mit.mabel.primes.data.PrimesDataToken;
-import hu.bme.mit.mabel.primes.data.PrimesPayload;
-import hu.bme.mit.mabel.primes.data.PrimesResults;
 import hu.bme.mit.mabel.primes.phases.CombinationPhase;
 import hu.bme.mit.mabel.primes.phases.FactorizationPhase;
 import hu.bme.mit.mabel.primes.phases.GenerationPhase;
@@ -18,35 +17,12 @@ import hu.bme.mit.mabel.primes.phases.TestPhase;
 public class PrimesDefaultWorkflow {
 
 	public static void run(final PrimesConfiguration configuration) {
-		final PrimesResults results = new PrimesResults();
+		final Results results = new Results();
 		for (int run = 1; run <= configuration.getRuns(); run++) {
-			final PrimesPayload data = PrimesPayload.create(configuration);
-			final PrimesDataToken dataToken0 = new PrimesDataToken(configuration, data, results);
-
-			// generation
-			final GenerationPhase generationPhase = new GenerationPhase(dataToken0);
-			final PhaseRunner<GenerationPhase, PrimesDataToken> generationRunner = new PhaseRunner<>(generationPhase);
-			generationRunner.run();
-			final PrimesDataToken dataToken1 = generationPhase.getDataToken();
-
-			// combination
-			final CombinationPhase combinationPhase = new CombinationPhase(dataToken1);
-			final PhaseRunner<CombinationPhase, PrimesDataToken> combinationRunner = new PhaseRunner<>(
-					combinationPhase);
-			combinationRunner.run();
-			final PrimesDataToken dataToken2 = generationPhase.getDataToken();
-
-			// factorization
-			final FactorizationPhase factorizationPhase = new FactorizationPhase(dataToken2);
-			final PhaseRunner<FactorizationPhase, PrimesDataToken> factorizationRunner = new PhaseRunner<>(
-					factorizationPhase);
-			factorizationRunner.run();
-			final PrimesDataToken dataToken3 = generationPhase.getDataToken();
-
-			// test
-			final TestPhase testPhase = new TestPhase(dataToken3);
-			final PhaseRunner<TestPhase, PrimesDataToken> testRunner = new PhaseRunner<>(testPhase);
-			testRunner.run();
+			final List<Integer> primes = PhaseRunner.run(new GenerationPhase(configuration), results);
+			final List<Long> combined = PhaseRunner.run(new CombinationPhase(primes), results);
+			final List<Integer> factors = PhaseRunner.run(new FactorizationPhase(combined, configuration), results);
+			PhaseRunner.run(new TestPhase(primes, factors), results);
 		}
 		System.out.print(results);
 	}

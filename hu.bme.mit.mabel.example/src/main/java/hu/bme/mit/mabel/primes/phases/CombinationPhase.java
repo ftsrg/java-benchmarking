@@ -1,22 +1,21 @@
 package hu.bme.mit.mabel.primes.phases;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import hu.bme.mit.mabel.engine.Phase;
-import hu.bme.mit.mabel.primes.data.PrimesDataToken;
-import hu.bme.mit.mabel.primes.data.PrimesPayload;
 
-public class CombinationPhase extends Phase<PrimesDataToken> {
+public class CombinationPhase implements Phase<List<Long>> {
 	
-	public CombinationPhase(final PrimesDataToken dataToken) {
-		super(dataToken);
+	private final List<Integer> primes;
+
+	public CombinationPhase(List<Integer> primes) {
+		this.primes = primes;
 	}
 
 	@Override
-	public void run() {
-		final PrimesPayload data = dataToken.getPayload();
-		final List<Integer> primes = data.getPrimes();
-		final List<Long> combined = data.getCombined();
+	public List<Long> run() {
+		final List<Long> combined = new ArrayList<>();
 
 		for (int i = 0; i < primes.size() / 2; i++) {
 			final long p1 = primes.get(2 * i);
@@ -25,6 +24,12 @@ public class CombinationPhase extends Phase<PrimesDataToken> {
 			
 			combined.add(c);
 		}
+		return combined;
+	}
+
+	@Override
+	public String getName() {
+		return "Combine";
 	}
 
 }
