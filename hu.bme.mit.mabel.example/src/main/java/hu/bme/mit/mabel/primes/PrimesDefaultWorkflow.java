@@ -1,6 +1,11 @@
 package hu.bme.mit.mabel.primes;
 
+import java.io.IOException;
+
+import org.kohsuke.args4j.CmdLineException;
+
 import hu.bme.mit.mabel.engine.PhaseRunner;
+import hu.bme.mit.mabel.engine.WorkflowRunner;
 import hu.bme.mit.mabel.primes.data.PrimesConfiguration;
 import hu.bme.mit.mabel.primes.data.PrimesDataToken;
 import hu.bme.mit.mabel.primes.data.PrimesPayload;
@@ -10,23 +15,9 @@ import hu.bme.mit.mabel.primes.phases.FactorizationPhase;
 import hu.bme.mit.mabel.primes.phases.GenerationPhase;
 import hu.bme.mit.mabel.primes.phases.TestPhase;
 
-public class PrimesMain {
+public class PrimesDefaultWorkflow {
 
-	public static void main(final String[] args) {
-		if (args.length < 1) {
-			System.out.println("Usage: app <runs>");
-			return;
-		}
-
-		final int runs = Integer.parseInt(args[0]);
-		final boolean verbose = false;
-		// final int max = Integer.MAX_VALUE;
-		final int max = 1000;
-		final int min = max / 2;
-		final int numberOfCompositeNumbers = 1;
-
-		final PrimesConfiguration configuration = new PrimesConfiguration(runs, verbose, numberOfCompositeNumbers, min, max);
-
+	public static void run(final PrimesConfiguration configuration) {
 		final PrimesResults results = new PrimesResults();
 		for (int run = 1; run <= configuration.getRuns(); run++) {
 			final PrimesPayload data = PrimesPayload.create(configuration);
@@ -40,13 +31,15 @@ public class PrimesMain {
 
 			// combination
 			final CombinationPhase combinationPhase = new CombinationPhase(dataToken1);
-			final PhaseRunner<CombinationPhase, PrimesDataToken> combinationRunner = new PhaseRunner<>(combinationPhase);
+			final PhaseRunner<CombinationPhase, PrimesDataToken> combinationRunner = new PhaseRunner<>(
+					combinationPhase);
 			combinationRunner.run();
 			final PrimesDataToken dataToken2 = generationPhase.getDataToken();
 
 			// factorization
 			final FactorizationPhase factorizationPhase = new FactorizationPhase(dataToken2);
-			final PhaseRunner<FactorizationPhase, PrimesDataToken> factorizationRunner = new PhaseRunner<>(factorizationPhase);
+			final PhaseRunner<FactorizationPhase, PrimesDataToken> factorizationRunner = new PhaseRunner<>(
+					factorizationPhase);
 			factorizationRunner.run();
 			final PrimesDataToken dataToken3 = generationPhase.getDataToken();
 
@@ -56,6 +49,15 @@ public class PrimesMain {
 			testRunner.run();
 		}
 		System.out.print(results);
+	}
+
+	public static void spawn(PrimesConfiguration configuration) throws IOException, InterruptedException {
+		WorkflowRunner.spawn(PrimesDefaultWorkflow.class, configuration);
+	}
+
+	public static void main(final String[] args) throws CmdLineException {
+		final PrimesConfiguration configuration = PrimesConfiguration.parse(args);
+		run(configuration);
 	}
 
 }

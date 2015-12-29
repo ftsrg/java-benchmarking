@@ -3,11 +3,11 @@ package hu.bme.mit.mabel.primes.phases;
 import java.util.ArrayList;
 import java.util.List;
 
-import hu.bme.mit.mabel.primes.PrimesPhase;
+import hu.bme.mit.mabel.engine.Phase;
 import hu.bme.mit.mabel.primes.data.PrimesDataToken;
 import hu.bme.mit.mabel.primes.data.PrimesPayload;
 
-public class FactorizationPhase extends PrimesPhase {
+public class FactorizationPhase extends Phase<PrimesDataToken> {
 
 	public FactorizationPhase(final PrimesDataToken dataToken) {
 		super(dataToken);
