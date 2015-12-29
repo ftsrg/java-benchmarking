@@ -1,5 +1,6 @@
 package hu.bme.mit.mabel.primes.phases;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.math3.random.MersenneTwister;
@@ -7,23 +8,21 @@ import org.apache.commons.math3.random.RandomDataGenerator;
 import org.apache.commons.math3.random.RandomGenerator;
 
 import hu.bme.mit.mabel.engine.Phase;
+import hu.bme.mit.mabel.engine.PhaseRunner;
 import hu.bme.mit.mabel.primes.data.PrimesConfiguration;
-import hu.bme.mit.mabel.primes.data.PrimesDataToken;
 
-public class GenerationPhase extends Phase<PrimesDataToken> {
+public class GenerationPhase implements Phase<List<Integer>> {
 
-	protected final long SEED = 42;
+	private static final long SEED = 42;
 
-	public GenerationPhase(final PrimesDataToken token) {
-		super(token);
+	private final PrimesConfiguration configuration;
+
+	public GenerationPhase(PrimesConfiguration configuration) {
+		this.configuration = configuration;
 	}
-
-	@Override
-	public void run() {
-		final PrimesConfiguration configuration = dataToken.getConfiguration();
-		final List<Integer> primes = dataToken.getPayload().getPrimes();
-		
-		
+	
+	public List<Integer> run() {
+		final List<Integer> primes = new ArrayList<>();
 		final RandomGenerator randomGenerator = new MersenneTwister(SEED);
 		final RandomDataGenerator randomDataGenerator = new RandomDataGenerator(randomGenerator);
 
@@ -38,7 +37,8 @@ public class GenerationPhase extends Phase<PrimesDataToken> {
 			} while (true);
 		}
 
-		log("Generated " + primes.size() + " primes: " + primes);
+		PhaseRunner.log("Generated " + primes.size() + " primes: " + primes, configuration);
+		return primes;
 	}
 
 	/**
@@ -47,7 +47,7 @@ public class GenerationPhase extends Phase<PrimesDataToken> {
 	 * @param x
 	 * @return
 	 */
-	private boolean isPrime(final long x) {
+	private static boolean isPrime(final long x) {
 		for (long i = 2; i <= Math.sqrt(x); i++) {
 			if (x % i == 0) {
 				return false;
@@ -55,4 +55,10 @@ public class GenerationPhase extends Phase<PrimesDataToken> {
 		}
 		return true;
 	}
+
+	@Override
+	public String getName() {
+		return "Generate";
+	}
+
 }

@@ -1,18 +1,36 @@
 package hu.bme.mit.mabel.primes.data;
 
+import org.kohsuke.args4j.CmdLineException;
+import org.kohsuke.args4j.CmdLineParser;
+import org.kohsuke.args4j.Option;
+
 import hu.bme.mit.mabel.data.Configuration;
 
 public class PrimesConfiguration extends Configuration {
 
-	protected final int numberOfCompositeNumbers;
-	private final int min;
-	private final int max;
+	@Option(name = "-composite", usage = "number of composite numbers")
+	private int numberOfCompositeNumbers;
+	
+	@Option(name = "-min", usage = "minimum value")
+	private int min;
+	
+	@Option(name = "-max", usage = "maximum value")
+	private int max;
 	
 	public PrimesConfiguration(final int runs, final boolean verbose, final int numberOfCompositeNumbers, final int min, final int max) {
 		super(runs, verbose);
 		this.numberOfCompositeNumbers = numberOfCompositeNumbers;
 		this.min = min;
 		this.max = max;
+	}
+	
+	protected PrimesConfiguration() {
+	}
+
+	public static PrimesConfiguration parse(String[] args) throws CmdLineException {
+		PrimesConfiguration configuration = new PrimesConfiguration();
+		new CmdLineParser(configuration).parseArgument(args);
+		return configuration;
 	}
 	
 	public int getNumberOfCompositeNumbers() {
@@ -26,5 +44,5 @@ public class PrimesConfiguration extends Configuration {
 	public int getMax() {
 		return max;
 	}
-	
+
 }

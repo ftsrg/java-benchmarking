@@ -1,22 +1,35 @@
 package hu.bme.mit.mabel.engine;
 
+import java.util.concurrent.TimeUnit;
+
+import com.google.common.base.Stopwatch;
+import com.google.common.base.Throwables;
+
 import hu.bme.mit.mabel.data.Configuration;
-import hu.bme.mit.mabel.data.DataToken;
-import hu.bme.mit.mabel.data.Payload;
 import hu.bme.mit.mabel.data.Results;
+import hu.bme.mit.mabel.metrics.TimeMetric;
 
-public class PhaseRunner<TPhase extends Phase<TDataToken>, TDataToken extends DataToken<? extends Configuration, ? extends Payload, ? extends Results>> {
+public class PhaseRunner {
 
-	protected final TPhase phase;
-
-	public PhaseRunner(final TPhase phase) {
-		this.phase = phase;
+	public static <Value> Value run(Phase<Value> phase, int run, Results results) {
+		Stopwatch stopwatch = Stopwatch.createStarted();
+		try {
+			Value value = phase.run();
+			final long elapsed = stopwatch.elapsed(TimeUnit.NANOSECONDS);
+			final TimeMetric metric = new TimeMetric(run, phase, 0, elapsed);
+			results.recordMetric(metric);
+			return value;
+		} catch (Exception e) {
+			throw Throwables.propagate(e);
+		} finally {
+			stopwatch.stop();
+		}
 	}
 
-	public final void run() {
-		phase.init();
-		phase.run();
-		phase.finish();
-	}	
+	public static void log(final String message, Configuration configuration) {
+		if (configuration.isVerbose()) {
+			System.out.println(message);
+		}
+	}
 
 }
