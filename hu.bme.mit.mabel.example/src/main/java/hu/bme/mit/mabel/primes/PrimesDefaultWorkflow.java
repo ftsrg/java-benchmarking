@@ -19,10 +19,10 @@ public class PrimesDefaultWorkflow {
 	public static void run(final PrimesConfiguration configuration) {
 		final Results results = new Results();
 		for (int run = 1; run <= configuration.getRuns(); run++) {
-			final List<Integer> primes = PhaseRunner.run(new GenerationPhase(configuration), results);
-			final List<Long> combined = PhaseRunner.run(new CombinationPhase(primes), results);
-			final List<Integer> factors = PhaseRunner.run(new FactorizationPhase(combined, configuration), results);
-			PhaseRunner.run(new TestPhase(primes, factors), results);
+			final List<Integer> primes = PhaseRunner.run(new GenerationPhase(configuration), run, results);
+			final List<Long> combined = PhaseRunner.run(new CombinationPhase(primes), run, results);
+			final List<Integer> factors = PhaseRunner.run(new FactorizationPhase(combined, configuration), run, results);
+			PhaseRunner.run(new TestPhase(primes, factors), run, results);
 		}
 		System.out.print(results);
 	}

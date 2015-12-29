@@ -8,7 +8,7 @@ public class PrimesDefaultWorkflowTest {
 
 	@Test
 	public void test() {
-		PrimesConfiguration configuration = new PrimesConfiguration(1, true, 1, 128, 256);
+		PrimesConfiguration configuration = new PrimesConfiguration(2, true, 1, 128, 256);
 		PrimesDefaultWorkflow.run(configuration);
 	}
 

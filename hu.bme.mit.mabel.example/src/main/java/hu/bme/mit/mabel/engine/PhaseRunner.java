@@ -11,12 +11,12 @@ import hu.bme.mit.mabel.metrics.TimeMetric;
 
 public class PhaseRunner {
 
-	public static <Value> Value run(Phase<Value> phase, Results results) {
+	public static <Value> Value run(Phase<Value> phase, int run, Results results) {
 		Stopwatch stopwatch = Stopwatch.createStarted();
 		try {
 			Value value = phase.run();
 			final long elapsed = stopwatch.elapsed(TimeUnit.NANOSECONDS);
-			final TimeMetric metric = new TimeMetric(0, phase, 0, elapsed);
+			final TimeMetric metric = new TimeMetric(run, phase, 0, elapsed);
 			results.recordMetric(metric);
 			return value;
 		} catch (Exception e) {
