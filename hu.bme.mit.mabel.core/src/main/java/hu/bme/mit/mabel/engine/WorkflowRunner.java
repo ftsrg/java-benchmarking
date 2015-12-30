@@ -9,6 +9,7 @@ import java.util.Properties;
 import org.kohsuke.args4j.CmdLineParser;
 import org.kohsuke.args4j.NamedOptionDef;
 import org.kohsuke.args4j.OptionDef;
+import org.kohsuke.args4j.spi.BooleanOptionHandler;
 import org.kohsuke.args4j.spi.OptionHandler;
 
 public class WorkflowRunner {
@@ -27,7 +28,7 @@ public class WorkflowRunner {
 		List<String> args = getCommandLineArguments(configuration);
 		command.addAll(args);
 
-		ProcessBuilder processBuilder = new ProcessBuilder(command);
+		ProcessBuilder processBuilder = new ProcessBuilder(command).inheritIO();
 		Process process = processBuilder.start();
 		process.waitFor();
 	}
@@ -47,9 +48,16 @@ public class WorkflowRunner {
 			OptionDef option = optionHandler.option;
 			if (option instanceof NamedOptionDef) {
 				NamedOptionDef namedOption = (NamedOptionDef) option;
-				result.add(namedOption.name());
+				Object value = optionHandler.setter.asFieldSetter().getValue();
+				if (optionHandler instanceof BooleanOptionHandler) {
+					if (value == Boolean.TRUE) {
+						result.add(namedOption.name());
+					}
+				} else {
+					result.add(namedOption.name());
+					result.add(value.toString());
+				}
 			}
-			result.add(optionHandler.setter.asFieldSetter().getValue().toString());
 		}
 		return result;
 	}
