@@ -1,18 +1,17 @@
 package hu.bme.mit.mabel.metrics;
 
+import hu.bme.mit.mabel.data.ExecutionId;
 import hu.bme.mit.mabel.engine.Phase;
 
 public abstract class Metric<TValue> {
 
-	protected final int run;
-	protected final Phase<?> phase;
-	protected final int id;
-	protected final TValue value;
+	private final Phase<?> phase;
+	private final ExecutionId executionId;
+	private final TValue value;
 
-	public Metric(final int run, final Phase<?> phase, final int id, final TValue value) {
-		this.run = run;
+	public Metric(final Phase<?> phase, final ExecutionId executionId, final TValue value) {
 		this.phase = phase;
-		this.id = id;
+		this.executionId = executionId;
 		this.value = value;
 	}
 
@@ -22,21 +21,13 @@ public abstract class Metric<TValue> {
 		return phase.getName();
 	}
 	
-	public int getRun() {
-		return run;
-	}
-	
-	public int getId() {
-		return id;
-	}
-	
 	public TValue getValue() {
 		return value;
 	}
 
 	@Override
 	public String toString() {
-		return String.format("%d,%d,%s,%s,%d", run, id, phase.getName(), getName(), value);
+		return String.format("%d,%s,%s,%s,%d", executionId.getRun(), executionId.getPhaseInstanceIdString(), phase.getName(), getName(), value);
 	}
 
 	public static String getHeader() {

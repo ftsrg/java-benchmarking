@@ -5,6 +5,9 @@ import java.util.List;
 
 import org.kohsuke.args4j.CmdLineException;
 
+import com.google.common.collect.ImmutableList;
+
+import hu.bme.mit.mabel.data.ExecutionId;
 import hu.bme.mit.mabel.data.Results;
 import hu.bme.mit.mabel.engine.PhaseRunner;
 import hu.bme.mit.mabel.engine.WorkflowRunner;
@@ -19,10 +22,11 @@ public class PrimesDefaultWorkflow {
 	public static void run(final PrimesConfiguration configuration) {
 		final Results results = new Results();
 		for (int run = 1; run <= configuration.getRuns(); run++) {
-			final List<Integer> primes = PhaseRunner.run(new GenerationPhase(configuration), run, results);
-			final List<Long> combined = PhaseRunner.run(new CombinationPhase(primes), run, results);
-			final List<Integer> factors = PhaseRunner.run(new FactorizationPhase(combined, configuration), run, results);
-			PhaseRunner.run(new TestPhase(primes, factors), run, results);
+			ExecutionId executionId = new ExecutionId(run, ImmutableList.<Integer>of());
+			final List<Integer> primes = PhaseRunner.run(new GenerationPhase(configuration), executionId, results);
+			final List<Long> combined = PhaseRunner.run(new CombinationPhase(primes), executionId, results);
+			final List<Integer> factors = PhaseRunner.run(new FactorizationPhase(combined, configuration), executionId, results);
+			PhaseRunner.run(new TestPhase(primes, factors), executionId, results);
 		}
 		System.out.print(results);
 	}
