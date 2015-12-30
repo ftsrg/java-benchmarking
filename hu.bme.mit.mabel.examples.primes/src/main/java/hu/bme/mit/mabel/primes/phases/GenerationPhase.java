@@ -7,8 +7,8 @@ import org.apache.commons.math3.random.MersenneTwister;
 import org.apache.commons.math3.random.RandomDataGenerator;
 import org.apache.commons.math3.random.RandomGenerator;
 
+import hu.bme.mit.mabel.engine.BenchmarkUtils;
 import hu.bme.mit.mabel.engine.Phase;
-import hu.bme.mit.mabel.engine.PhaseRunner;
 import hu.bme.mit.mabel.primes.data.PrimesConfiguration;
 
 public class GenerationPhase implements Phase<List<Integer>> {
@@ -37,7 +37,7 @@ public class GenerationPhase implements Phase<List<Integer>> {
 			} while (true);
 		}
 
-		PhaseRunner.log("Generated " + primes.size() + " primes: " + primes, configuration);
+		BenchmarkUtils.log("Generated " + primes.size() + " primes: " + primes, configuration);
 		return primes;
 	}
 

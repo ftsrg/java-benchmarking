@@ -5,6 +5,9 @@ import java.util.List;
 
 import hu.bme.mit.mabel.metrics.Metric;
 
+/**
+ * The output of a benchmark workflow, containing the collected {@link Metric}s. 
+ */
 public class Results {
 
 	protected final List<Metric<?>> metrics = new ArrayList<>();

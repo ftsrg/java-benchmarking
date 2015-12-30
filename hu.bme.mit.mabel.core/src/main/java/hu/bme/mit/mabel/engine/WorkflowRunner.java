@@ -12,9 +12,15 @@ import org.kohsuke.args4j.OptionDef;
 import org.kohsuke.args4j.spi.BooleanOptionHandler;
 import org.kohsuke.args4j.spi.OptionHandler;
 
+import hu.bme.mit.mabel.data.Configuration;
+
 public class WorkflowRunner {
 
-	public static void spawn(Class<?> workflowClass, Object configuration) throws IOException, InterruptedException {
+	/**
+	 * Runs the <code>main</code> method of the given workflow {@link Class} with the given {@link Configuration}
+	 * in a separate JVM process.
+	 */
+	public static void spawn(Class<?> workflowClass, Configuration configuration) throws IOException, InterruptedException {
 		List<String> command = new ArrayList<>();
 		command.add("java");
 
@@ -41,7 +47,7 @@ public class WorkflowRunner {
 		return jarPath;
 	}
 
-	private static List<String> getCommandLineArguments(Object configuration) {
+	private static List<String> getCommandLineArguments(Configuration configuration) {
 		List<String> result = new ArrayList<>();
 		CmdLineParser parser = new CmdLineParser(configuration);
 		for (OptionHandler<?> optionHandler : parser.getOptions()) {

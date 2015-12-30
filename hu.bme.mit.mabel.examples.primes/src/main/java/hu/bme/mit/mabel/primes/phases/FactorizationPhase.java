@@ -3,8 +3,8 @@ package hu.bme.mit.mabel.primes.phases;
 import java.util.ArrayList;
 import java.util.List;
 
+import hu.bme.mit.mabel.engine.BenchmarkUtils;
 import hu.bme.mit.mabel.engine.Phase;
-import hu.bme.mit.mabel.engine.PhaseRunner;
 import hu.bme.mit.mabel.primes.data.PrimesConfiguration;
 
 public class FactorizationPhase implements Phase<List<Integer>> {
@@ -36,7 +36,7 @@ public class FactorizationPhase implements Phase<List<Integer>> {
 			}
 		}
 		
-		PhaseRunner.log("Factors: " + factors, configuration);
+		BenchmarkUtils.log("Factors: " + factors, configuration);
 		return factors;
 	}
 

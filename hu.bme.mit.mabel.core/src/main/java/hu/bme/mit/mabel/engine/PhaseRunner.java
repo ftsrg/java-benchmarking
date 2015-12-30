@@ -5,13 +5,17 @@ import java.util.concurrent.TimeUnit;
 import com.google.common.base.Stopwatch;
 import com.google.common.base.Throwables;
 
-import hu.bme.mit.mabel.data.Configuration;
 import hu.bme.mit.mabel.data.ExecutionId;
 import hu.bme.mit.mabel.data.Results;
+import hu.bme.mit.mabel.metrics.Metric;
 import hu.bme.mit.mabel.metrics.TimeMetric;
 
 public class PhaseRunner {
 
+	/**
+	 * Runs the given {@link Phase} whose execution is identified by the given {@link ExecutionId},
+	 * records the measured {@link Metric}s to the given {@link Results}, and returns the output of the {@link Phase}. 
+	 */
 	public static <Value> Value run(Phase<Value> phase, ExecutionId executionId, Results results) {
 		Stopwatch stopwatch = Stopwatch.createStarted();
 		try {
@@ -24,12 +28,6 @@ public class PhaseRunner {
 			throw Throwables.propagate(e);
 		} finally {
 			stopwatch.stop();
-		}
-	}
-
-	public static void log(final String message, Configuration configuration) {
-		if (configuration.isVerbose()) {
-			System.out.println(message);
 		}
 	}
 

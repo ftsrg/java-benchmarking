@@ -4,6 +4,9 @@ import org.kohsuke.args4j.CmdLineException;
 import org.kohsuke.args4j.CmdLineParser;
 import org.kohsuke.args4j.Option;
 
+/**
+ * The input parameters of a benchmark workflow. 
+ */
 public class Configuration {
 	
 	@Option(name = "-runs", usage = "number of runs")
@@ -21,6 +24,9 @@ public class Configuration {
 	protected Configuration() {
 	}
 
+	/**
+	 * Parses a {@link Configuration} from the given command-line arguments. 
+	 */
 	public static Configuration parse(String[] args) throws CmdLineException {
 		Configuration configuration = new Configuration();
 		new CmdLineParser(configuration).parseArgument(args);
