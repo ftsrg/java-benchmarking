@@ -26,7 +26,8 @@ public class RDFDefaultWorkflow {
 			final RepositoryConnection repositoryConnection2 = PhaseRunner.run(new LoadPhase(repositoryConnection1, configuration.getModelPath()), executionId, results);
 
 			for (int query = 1; query <= configuration.getQueries(); query++) {
-				final List<BindingSet> bindingSets = PhaseRunner.run(new QueryPhase(repositoryConnection2), executionId, results);
+				final ExecutionId queryExecutionId = new ExecutionId(run, query);
+				final List<BindingSet> bindingSets = PhaseRunner.run(new QueryPhase(repositoryConnection2), queryExecutionId, results);
 			}
 		}
 		System.out.print(results);
