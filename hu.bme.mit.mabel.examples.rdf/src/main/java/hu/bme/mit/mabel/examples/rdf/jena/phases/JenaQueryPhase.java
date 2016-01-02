@@ -11,7 +11,7 @@ import org.apache.jena.rdf.model.Model;
 
 import hu.bme.mit.mabel.examples.rdf.phases.QueryPhase;
 
-public class JenaQueryPhase extends QueryPhase<Model, List<QuerySolution>> {
+public class JenaQueryPhase extends QueryPhase<Model, QuerySolution> {
 
 	final String query = "SELECT (COUNT(*) AS ?count) WHERE {?s ?p ?o}";
 

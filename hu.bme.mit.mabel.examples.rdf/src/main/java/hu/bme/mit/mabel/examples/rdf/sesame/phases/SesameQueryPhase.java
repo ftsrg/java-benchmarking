@@ -11,7 +11,7 @@ import org.openrdf.repository.RepositoryConnection;
 
 import hu.bme.mit.mabel.examples.rdf.phases.QueryPhase;
 
-public class SesameQueryPhase extends QueryPhase<RepositoryConnection, List<BindingSet>> {
+public class SesameQueryPhase extends QueryPhase<RepositoryConnection, BindingSet> {
 
 	final String query = "SELECT (COUNT(*) AS ?count) WHERE {?s ?p ?o}";
 
