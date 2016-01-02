@@ -25,7 +25,7 @@
 						<manifest>
 							<addClasspath>true</addClasspath>
 							<classpathPrefix>lib/</classpathPrefix>
-							<mainClass>hu.bme.mit.mabel.example.Main</mainClass>
+							<mainClass>hu.bme.mit.mabel.examples.primes.Main</mainClass>
 							<useUniqueVersions>false</useUniqueVersions>
 						</manifest>
 					</archive>
