@@ -3,9 +3,9 @@ set -e
 cd "$( cd "$( dirname "$0" )" && pwd )/.."
 
 RUNS=50
-WD=hu.bme.mit.mabel.examples.primes
+WD=hu.bme.mit.mabel.examples.rdf
 RESULTS=results/results.csv
-APP=target/hu.bme.mit.mabel.examples.primes-0.0.1-SNAPSHOT.jar
+APP=target/hu.bme.mit.mabel.examples.rdf-0.0.1-SNAPSHOT.jar
 
 # convert the $RESULTS variable to an absolute path
 RESULTS=$(pwd)/$RESULTS
