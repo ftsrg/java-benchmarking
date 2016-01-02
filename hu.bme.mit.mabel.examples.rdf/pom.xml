@@ -9,6 +9,7 @@
 	<artifactId>hu.bme.mit.mabel.examples.rdf</artifactId>
 
 	<properties>
+		<jena.version>3.0.0</jena.version>
 		<sesame.version>4.0.1</sesame.version>
 	</properties>
 
@@ -97,6 +98,12 @@
 			<groupId>org.openrdf.sesame</groupId>
 			<artifactId>sesame-repository-manager</artifactId>
 			<version>${sesame.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.jena</groupId>
+			<artifactId>jena-querybuilder</artifactId>
+			<version>${jena.version}</version>
 		</dependency>
 
 		<dependency>
