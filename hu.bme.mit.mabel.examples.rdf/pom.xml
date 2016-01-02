@@ -38,6 +38,7 @@
 									implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
 									<mainClass>hu.bme.mit.mabel.examples.rdf.RDFBenchmark</mainClass>
 								</transformer>
+								<transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
 							</transformers>
 						</configuration>
 					</execution>
@@ -52,7 +53,7 @@
 			<artifactId>hu.bme.mit.mabel.core</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.openrdf.sesame</groupId>
 			<artifactId>sesame-model</artifactId>
@@ -76,7 +77,7 @@
 			<artifactId>slf4j-nop</artifactId>
 			<version>1.7.13</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
