@@ -17,10 +17,11 @@ public class GenerationPhase implements Phase<List<Integer>> {
 
 	private final PrimesConfiguration configuration;
 
-	public GenerationPhase(PrimesConfiguration configuration) {
+	public GenerationPhase(final PrimesConfiguration configuration) {
 		this.configuration = configuration;
 	}
-	
+
+	@Override
 	public List<Integer> run() {
 		final List<Integer> primes = new ArrayList<>();
 		final RandomGenerator randomGenerator = new MersenneTwister(SEED);
@@ -43,11 +44,14 @@ public class GenerationPhase implements Phase<List<Integer>> {
 
 	/**
 	 * Tests if a number is prime. We deliberately use a naive algorithm.
-	 * 
+	 *
 	 * @param x
 	 * @return
 	 */
 	private static boolean isPrime(final long x) {
+		if (x <= 1) {
+			return false;
+		}
 		for (long i = 2; i <= Math.sqrt(x); i++) {
 			if (x % i == 0) {
 				return false;
