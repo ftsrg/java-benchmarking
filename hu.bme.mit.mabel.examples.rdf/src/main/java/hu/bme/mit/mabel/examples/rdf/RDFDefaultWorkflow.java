@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.util.List;
 
 import org.kohsuke.args4j.CmdLineException;
-import org.openrdf.query.BindingSet;
-import org.openrdf.repository.RepositoryConnection;
 
 import hu.bme.mit.mabel.data.ExecutionId;
 import hu.bme.mit.mabel.data.Results;
@@ -13,24 +11,31 @@ import hu.bme.mit.mabel.engine.PhaseRunner;
 import hu.bme.mit.mabel.engine.WorkflowRunner;
 import hu.bme.mit.mabel.examples.rdf.data.RDFConfiguration;
 import hu.bme.mit.mabel.examples.rdf.metrics.MatchesMetric;
-import hu.bme.mit.mabel.examples.rdf.sesame.phases.SesameInitPhase;
-import hu.bme.mit.mabel.examples.rdf.sesame.phases.SesameLoadPhase;
-import hu.bme.mit.mabel.examples.rdf.sesame.phases.SesameQueryPhase;
+import hu.bme.mit.mabel.examples.rdf.phases.QueryPhase;
 import hu.bme.mit.mabel.metrics.Metric;
 
 public class RDFDefaultWorkflow {
 
 	public static void run(final RDFConfiguration configuration) {
+		final RDFToolFactory<?, ?> factory = configuration.getTool();
+		doRun(configuration, factory);
+	}
+
+	private static <DatabaseConnection, QueryResult> void doRun(final RDFConfiguration configuration, RDFToolFactory<DatabaseConnection, QueryResult> factory) {
 		final Results results = new Results();
 		for (int run = 1; run <= configuration.getRuns(); run++) {
 			final ExecutionId executionId = new ExecutionId(run);
-			final RepositoryConnection repositoryConnection1 = PhaseRunner.run(new SesameInitPhase(), executionId, results);
-			final RepositoryConnection repositoryConnection2 = PhaseRunner.run(new SesameLoadPhase(repositoryConnection1, configuration.getModelPath()), executionId, results);
+
+			final DatabaseConnection databaseConnectionEmpty = PhaseRunner.run(factory.createInitPhase(), executionId, results);
+			final DatabaseConnection databaseConnectionLoaded = PhaseRunner.run(factory.createLoadPhase(databaseConnectionEmpty, configuration.getModelPath()), executionId, results);
 
 			for (int query = 1; query <= configuration.getQueries(); query++) {
 				final ExecutionId queryExecutionId = new ExecutionId(run, query);
-				final SesameQueryPhase queryPhase = new SesameQueryPhase(repositoryConnection2);
-				final List<BindingSet> bindingSets = PhaseRunner.run(queryPhase, queryExecutionId, results);
+
+				final QueryPhase<DatabaseConnection, QueryResult> queryPhase = factory.createQueryPhase(databaseConnectionLoaded);
+				final List<QueryResult> bindingSets = PhaseRunner.run(queryPhase, queryExecutionId, results);
+
+				factory.createQueryPhase(databaseConnectionLoaded);
 				final Metric<?> matches = new MatchesMetric(queryPhase, queryExecutionId, bindingSets.size());
 				results.recordMetric(matches);
 			}
