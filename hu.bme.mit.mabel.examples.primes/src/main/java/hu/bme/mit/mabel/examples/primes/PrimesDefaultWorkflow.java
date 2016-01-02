@@ -20,16 +20,16 @@ public class PrimesDefaultWorkflow {
 	public static void run(final PrimesConfiguration configuration) {
 		final Results results = new Results();
 		for (int run = 1; run <= configuration.getRuns(); run++) {
-			ExecutionId executionId = new ExecutionId(run);
+			final ExecutionId executionId = new ExecutionId(run);
 			final List<Integer> primes = PhaseRunner.run(new GenerationPhase(configuration), executionId, results);
 			final List<Long> combined = PhaseRunner.run(new CombinationPhase(primes), executionId, results);
-			final List<Integer> factors = PhaseRunner.run(new FactorizationPhase(combined, configuration), executionId, results);
+			final List<Integer> factors = PhaseRunner.run(new FactorizationPhase(configuration, combined), executionId, results);
 			PhaseRunner.run(new TestPhase(primes, factors), executionId, results);
 		}
 		System.out.print(results);
 	}
 
-	public static void spawn(PrimesConfiguration configuration) throws IOException, InterruptedException {
+	public static void spawn(final PrimesConfiguration configuration) throws IOException, InterruptedException {
 		WorkflowRunner.spawn(PrimesDefaultWorkflow.class, configuration);
 	}
 

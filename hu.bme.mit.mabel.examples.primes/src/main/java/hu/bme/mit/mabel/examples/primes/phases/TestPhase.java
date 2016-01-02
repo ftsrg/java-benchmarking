@@ -9,7 +9,7 @@ public class TestPhase implements Phase<Void> {
 	private final List<Integer> primes;
 	private final List<Integer> factors;
 
-	public TestPhase(List<Integer> primes, List<Integer> factors) {
+	public TestPhase(final List<Integer> primes, final List<Integer> factors) {
 		this.primes = primes;
 		this.factors = factors;
 	}

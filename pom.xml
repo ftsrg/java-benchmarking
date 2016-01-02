@@ -25,6 +25,14 @@
 			<modules>
 				<module>hu.bme.mit.mabel.core</module>
 				<module>hu.bme.mit.mabel.examples.primes</module>
+				<module>hu.bme.mit.mabel.examples.rdf</module>
+			</modules>
+		</profile>
+
+		<profile>
+			<id>core</id>
+			<modules>
+				<module>hu.bme.mit.mabel.core</module>
 			</modules>
 		</profile>
 

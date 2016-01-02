@@ -8,11 +8,11 @@ public interface Phase<Value> {
 	/**
 	 * The logic that has to be measured.
 	 */
-	Value run();
+	Value run() throws Exception;
 
 	/**
 	 * The name of the {@link Phase}.
 	 */
 	String getName();
-	
+
 }

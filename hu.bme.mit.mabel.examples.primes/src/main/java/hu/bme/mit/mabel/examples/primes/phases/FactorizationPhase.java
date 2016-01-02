@@ -12,30 +12,32 @@ public class FactorizationPhase implements Phase<List<Integer>> {
 	private final List<Long> combined;
 	private final PrimesConfiguration configuration;
 
-	public FactorizationPhase(List<Long> combined, PrimesConfiguration configuration) {
+	public FactorizationPhase(final PrimesConfiguration configuration, final List<Long> combined) {
 		this.combined = combined;
 		this.configuration = configuration;
 	}
 
+	@Override
 	public List<Integer> run() {
-		List<Integer> result = new ArrayList<>();
+		final List<Integer> result = new ArrayList<>();
 		for (final Long x : combined) {
-			final List<Integer> factors = factors(x, configuration);
+			final List<Integer> factors = factors(configuration, x);
 			result.addAll(factors);
 		}
 		return result;
 	}
 
-	private static List<Integer> factors(Long x, PrimesConfiguration configuration) {
+	private static List<Integer> factors(final PrimesConfiguration configuration, final Long x) {
 		final List<Integer> factors = new ArrayList<Integer>();
 
-		for (int i = 2; i <= x; i++) {
-			while (x % i == 0) {
+		Long n = x;
+		for (int i = 2; i <= n; i++) {
+			while (n % i == 0) {
 				factors.add(i);
-				x /= i;
+				n /= i;
 			}
 		}
-		
+
 		BenchmarkUtils.log("Factors: " + factors, configuration);
 		return factors;
 	}
