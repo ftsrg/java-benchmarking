@@ -12,9 +12,11 @@ import hu.bme.mit.mabel.data.Results;
 import hu.bme.mit.mabel.engine.PhaseRunner;
 import hu.bme.mit.mabel.engine.WorkflowRunner;
 import hu.bme.mit.mabel.examples.rdf.data.RDFConfiguration;
-import hu.bme.mit.mabel.examples.rdf.phases.InitPhase;
-import hu.bme.mit.mabel.examples.rdf.phases.LoadPhase;
-import hu.bme.mit.mabel.examples.rdf.phases.QueryPhase;
+import hu.bme.mit.mabel.examples.rdf.metrics.MatchesMetric;
+import hu.bme.mit.mabel.examples.rdf.sesame.phases.SesameInitPhase;
+import hu.bme.mit.mabel.examples.rdf.sesame.phases.SesameLoadPhase;
+import hu.bme.mit.mabel.examples.rdf.sesame.phases.SesameQueryPhase;
+import hu.bme.mit.mabel.metrics.Metric;
 
 public class RDFDefaultWorkflow {
 
@@ -22,12 +24,15 @@ public class RDFDefaultWorkflow {
 		final Results results = new Results();
 		for (int run = 1; run <= configuration.getRuns(); run++) {
 			final ExecutionId executionId = new ExecutionId(run);
-			final RepositoryConnection repositoryConnection1 = PhaseRunner.run(new InitPhase(), executionId, results);
-			final RepositoryConnection repositoryConnection2 = PhaseRunner.run(new LoadPhase(repositoryConnection1, configuration.getModelPath()), executionId, results);
+			final RepositoryConnection repositoryConnection1 = PhaseRunner.run(new SesameInitPhase(), executionId, results);
+			final RepositoryConnection repositoryConnection2 = PhaseRunner.run(new SesameLoadPhase(repositoryConnection1, configuration.getModelPath()), executionId, results);
 
 			for (int query = 1; query <= configuration.getQueries(); query++) {
 				final ExecutionId queryExecutionId = new ExecutionId(run, query);
-				final List<BindingSet> bindingSets = PhaseRunner.run(new QueryPhase(repositoryConnection2), queryExecutionId, results);
+				final SesameQueryPhase queryPhase = new SesameQueryPhase(repositoryConnection2);
+				final List<BindingSet> bindingSets = PhaseRunner.run(queryPhase, queryExecutionId, results);
+				final Metric<?> matches = new MatchesMetric(queryPhase, queryExecutionId, bindingSets.size());
+				results.recordMetric(matches);
 			}
 		}
 		System.out.print(results);

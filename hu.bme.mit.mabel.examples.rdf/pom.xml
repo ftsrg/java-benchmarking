@@ -9,7 +9,7 @@
 	<artifactId>hu.bme.mit.mabel.examples.rdf</artifactId>
 
 	<properties>
-		<sesame.version>4.0.0</sesame.version>
+		<sesame.version>4.0.1</sesame.version>
 	</properties>
 
 	<build>
