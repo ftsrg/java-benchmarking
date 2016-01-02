@@ -10,8 +10,8 @@ import hu.bme.mit.mabel.metrics.Metric;
  */
 public class MatchesMetric extends Metric<Long> {
 
-	public MatchesMetric(final Phase<?> phase, final ExecutionId executionId, final long elapsed) {
-		super(phase, executionId, elapsed);
+	public MatchesMetric(final Phase<?> phase, final ExecutionId executionId, final long matches) {
+		super(phase, executionId, matches);
 	}
 
 	@Override
