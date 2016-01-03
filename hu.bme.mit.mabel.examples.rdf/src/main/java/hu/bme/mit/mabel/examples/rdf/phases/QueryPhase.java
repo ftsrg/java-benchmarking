@@ -6,7 +6,7 @@ import hu.bme.mit.mabel.engine.Phase;
 
 public abstract class QueryPhase<DatabaseConnection, QueryResult> implements Phase<List<QueryResult>> {
 
-	protected final String query = "SELECT (COUNT(*) AS ?count) WHERE {?s ?p ?o}";
+	protected final String query = "SELECT * WHERE {?s ?p ?o}";
 	protected final DatabaseConnection databaseConnection;
 
 	public QueryPhase(final DatabaseConnection databaseConnection) {

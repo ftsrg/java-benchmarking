@@ -13,8 +13,6 @@ import hu.bme.mit.mabel.examples.rdf.phases.QueryPhase;
 
 public class JenaQueryPhase extends QueryPhase<Model, QuerySolution> {
 
-	final String query = "SELECT (COUNT(*) AS ?count) WHERE {?s ?p ?o}";
-
 	public JenaQueryPhase(final Model model) {
 		super(model);
 	}

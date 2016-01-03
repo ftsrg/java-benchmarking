@@ -13,8 +13,6 @@ import hu.bme.mit.mabel.examples.rdf.phases.QueryPhase;
 
 public class SesameQueryPhase extends QueryPhase<RepositoryConnection, BindingSet> {
 
-	final String query = "SELECT (COUNT(*) AS ?count) WHERE {?s ?p ?o}";
-
 	public SesameQueryPhase(final RepositoryConnection repositoryConnection) {
 		super(repositoryConnection);
 	}
