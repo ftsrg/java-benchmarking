@@ -32,8 +32,8 @@ public class Results {
 			results += String.format("%s,%d,%s,%s,%s,%d",
 					configuration.getSubject(),
 					metric.getExecutionId().getRun(),
-					metric.getExecutionId().getPhaseInstanceIdString(),
 					metric.getPhaseName(),
+					metric.getExecutionId().getPhaseInstanceIdString(),
 					metric.getName(),
 					metric.getValue());
 			results += "\n";
