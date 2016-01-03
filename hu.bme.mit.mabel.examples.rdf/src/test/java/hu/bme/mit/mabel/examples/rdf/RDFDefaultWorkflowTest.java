@@ -5,7 +5,7 @@ import org.junit.Test;
 import hu.bme.mit.mabel.examples.rdf.data.RDFConfiguration;
 import hu.bme.mit.mabel.examples.rdf.data.RDFTool;
 
-public class RdfDefaultWorkflowTest {
+public class RDFDefaultWorkflowTest {
 
 	@Test
 	public void test() {

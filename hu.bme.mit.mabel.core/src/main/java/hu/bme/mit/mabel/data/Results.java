@@ -27,7 +27,7 @@ public class Results {
 
 	@Override
 	public String toString() {
-		String results = Metric.getHeader();
+		String results = "";
 		for (final Metric<?> metric : metrics) {
 			results += String.format("%s,%d,%s,%s,%s,%d",
 					configuration.getSubject(),
