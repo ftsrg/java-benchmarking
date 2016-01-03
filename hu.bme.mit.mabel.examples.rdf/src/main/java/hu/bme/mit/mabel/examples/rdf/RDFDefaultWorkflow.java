@@ -16,8 +16,8 @@ import hu.bme.mit.mabel.metrics.Metric;
 
 public class RDFDefaultWorkflow {
 
-	static final String QUERY1 = "SELECT DISTINCT * WHERE {?s ?p ?o}";
-	static final String QUERY2 = "SELECT DISTINCT ?s WHERE {?s ?p ?o}";
+	static final String QUERY1 = "SELECT DISTINCT ?s1 WHERE {?s1 ?p1 ?o1 . ?s1 ?p2 ?o2 . FILTER (?p1 != ?p2)}";
+	static final String QUERY2 = "SELECT DISTINCT ?s WHERE {?s ?p ?o }";
 
 	public static void run(final RDFConfiguration configuration) {
 		final RDFToolFactory<?, ?> factory = configuration.getTool();

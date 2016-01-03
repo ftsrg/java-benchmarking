@@ -21,3 +21,4 @@ catalog-v*.xml
 *.tar.gz
 *.zip
 results.csv
+*.log
