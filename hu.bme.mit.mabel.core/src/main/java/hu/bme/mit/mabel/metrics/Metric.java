@@ -37,9 +37,8 @@ public abstract class Metric<TValue> {
 		return value;
 	}
 
-	@Override
-	public String toString() {
-		return String.format("%s,%d,%s,%s,%s,%d", executionId.getSubject(), executionId.getRun(), executionId.getPhaseInstanceIdString(), phase.getName(), getName(), value);
+	public ExecutionId getExecutionId() {
+		return executionId;
 	}
 
 	public static String getHeader() {

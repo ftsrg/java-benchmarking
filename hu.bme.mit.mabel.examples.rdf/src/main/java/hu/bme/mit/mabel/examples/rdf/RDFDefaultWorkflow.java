@@ -22,15 +22,15 @@ public class RDFDefaultWorkflow {
 	}
 
 	private static <DatabaseConnection, QueryResult> void doRun(final RDFConfiguration configuration, final RDFToolFactory<DatabaseConnection, QueryResult> factory) {
-		final Results results = new Results();
+		final Results results = new Results(configuration);
 		for (int run = 1; run <= configuration.getRuns(); run++) {
-			final ExecutionId executionId = new ExecutionId(factory.getName(), run);
+			final ExecutionId executionId = new ExecutionId(run);
 
 			final DatabaseConnection databaseConnectionEmpty = PhaseRunner.run(factory.createInitPhase(), executionId, results);
 			final DatabaseConnection databaseConnectionLoaded = PhaseRunner.run(factory.createLoadPhase(databaseConnectionEmpty, configuration.getModelPath()), executionId, results);
 
 			for (int query = 1; query <= configuration.getQueries(); query++) {
-				final ExecutionId queryExecutionId = new ExecutionId(factory.getName(), run, query);
+				final ExecutionId queryExecutionId = new ExecutionId(run, query);
 
 				final QueryPhase<DatabaseConnection, QueryResult> queryPhase = factory.createQueryPhase(databaseConnectionLoaded);
 				final List<QueryResult> queryResults = PhaseRunner.run(queryPhase, queryExecutionId, results);

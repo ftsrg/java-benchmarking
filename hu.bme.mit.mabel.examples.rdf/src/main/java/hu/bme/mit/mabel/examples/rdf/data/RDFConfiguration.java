@@ -55,4 +55,9 @@ public class RDFConfiguration extends Configuration {
 		}
 	}
 
+	@Override
+	public String getSubject() {
+		return tool.toString();
+	}
+
 }

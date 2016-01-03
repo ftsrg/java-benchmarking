@@ -12,25 +12,16 @@ import hu.bme.mit.mabel.engine.Phase;
  */
 public class ExecutionId {
 
-	private final String subject;
 	private final int run;
 	private final List<Integer> phaseInstanceId;
 
-	public ExecutionId(final String subject, final int run, final List<Integer> phaseInstanceId) {
-		this.subject = subject;
+	public ExecutionId(final int run, final List<Integer> phaseInstanceId) {
 		this.run = run;
 		this.phaseInstanceId = phaseInstanceId;
 	}
 
-	public ExecutionId(final String subject, final int run, final Integer... phaseInstanceId) {
-		this(subject, run, Arrays.asList(phaseInstanceId));
-	}
-
-	/**
-	 * The subject of the benchmark, e.g. the tool or the algorithm under benchmark.
-	 */
-	public String getSubject() {
-		return subject;
+	public ExecutionId(final int run, final Integer... phaseInstanceId) {
+		this(run, Arrays.asList(phaseInstanceId));
 	}
 
 	/**

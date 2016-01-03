@@ -28,9 +28,4 @@ public class SesameFactory implements RDFToolFactory<RepositoryConnection, Bindi
 		return new SesameQueryPhase(databaseConnection);
 	}
 
-	@Override
-	public String getName() {
-		return "Sesame";
-	}
-
 }
