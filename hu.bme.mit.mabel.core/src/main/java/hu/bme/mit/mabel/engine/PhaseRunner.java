@@ -14,17 +14,17 @@ public class PhaseRunner {
 
 	/**
 	 * Runs the given {@link Phase} whose execution is identified by the given {@link ExecutionId},
-	 * records the measured {@link Metric}s to the given {@link Results}, and returns the output of the {@link Phase}. 
+	 * records the measured {@link Metric}s to the given {@link Results}, and returns the output of the {@link Phase}.
 	 */
-	public static <Value> Value run(Phase<Value> phase, ExecutionId executionId, Results results) {
-		Stopwatch stopwatch = Stopwatch.createStarted();
+	public static <Value> Value run(final Phase<Value> phase, final ExecutionId executionId, final Results results) {
+		final Stopwatch stopwatch = Stopwatch.createStarted();
 		try {
-			Value value = phase.run();
+			final Value value = phase.run();
 			final long elapsed = stopwatch.elapsed(TimeUnit.NANOSECONDS);
 			final TimeMetric metric = new TimeMetric(phase, executionId, elapsed);
 			results.recordMetric(metric);
 			return value;
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			throw Throwables.propagate(e);
 		} finally {
 			stopwatch.stop();

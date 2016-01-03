@@ -29,7 +29,7 @@ public abstract class Metric<TValue> {
 	public String getPhaseName() {
 		return phase.getName();
 	}
-	
+
 	/**
 	 * The value associated with the {@link Metric}.
 	 */
@@ -39,11 +39,11 @@ public abstract class Metric<TValue> {
 
 	@Override
 	public String toString() {
-		return String.format("%d,%s,%s,%s,%d", executionId.getRun(), executionId.getPhaseInstanceIdString(), phase.getName(), getName(), value);
+		return String.format("%s,%d,%s,%s,%s,%d", executionId.getSubject(), executionId.getRun(), executionId.getPhaseInstanceIdString(), phase.getName(), getName(), value);
 	}
 
 	public static String getHeader() {
-		return "Run,Id,Phase,Metric,Value\n";
+		return "Subject,Run,Id,Phase,Metric,Value\n";
 	}
 
 }

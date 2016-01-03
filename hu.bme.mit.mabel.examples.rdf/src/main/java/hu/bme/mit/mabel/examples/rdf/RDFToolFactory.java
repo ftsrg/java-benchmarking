@@ -12,4 +12,6 @@ public interface RDFToolFactory<DatabaseConnection, QueryResult> {
 
 	QueryPhase<DatabaseConnection, QueryResult> createQueryPhase(DatabaseConnection databaseConnection);
 
+	String getName();
+
 }

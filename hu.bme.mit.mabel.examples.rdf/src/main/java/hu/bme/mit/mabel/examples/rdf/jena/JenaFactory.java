@@ -28,7 +28,9 @@ public class JenaFactory implements RDFToolFactory<Model, QuerySolution> {
 		return new JenaQueryPhase(databaseConnection);
 	}
 
-
-
+	@Override
+	public String getName() {
+		return "Jena";
+	}
 
 }

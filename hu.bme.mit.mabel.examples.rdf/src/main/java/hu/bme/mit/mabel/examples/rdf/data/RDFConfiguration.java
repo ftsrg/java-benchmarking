@@ -11,13 +11,13 @@ import hu.bme.mit.mabel.examples.rdf.sesame.SesameFactory;
 
 public class RDFConfiguration extends Configuration {
 
-	@Option(name = "-model", usage = "path to the RDF model")
+	@Option(name = "-model", required = true, usage = "path to the RDF model")
 	private String modelPath;
 
-	@Option(name = "-queries", usage = "number of queries to perform")
+	@Option(name = "-queries", required = true, usage = "number of queries to perform")
 	private int queries;
-	
-	@Option(name = "-tool", usage = "the RDF tool to benchmark")
+
+	@Option(name = "-tool", required = true, usage = "the RDF tool to benchmark")
 	private RDFTool tool;
 
 	public RDFConfiguration(final int runs, final boolean verbose, final String modelPath, final int queries, final RDFTool tool) {

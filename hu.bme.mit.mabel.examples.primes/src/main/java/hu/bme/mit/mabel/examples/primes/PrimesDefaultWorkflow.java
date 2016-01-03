@@ -20,7 +20,7 @@ public class PrimesDefaultWorkflow {
 	public static void run(final PrimesConfiguration configuration) {
 		final Results results = new Results();
 		for (int run = 1; run <= configuration.getRuns(); run++) {
-			final ExecutionId executionId = new ExecutionId(run);
+			final ExecutionId executionId = new ExecutionId("Naive", run);
 			final List<Integer> primes = PhaseRunner.run(new GenerationPhase(configuration), executionId, results);
 			final List<Long> combined = PhaseRunner.run(new CombinationPhase(primes), executionId, results);
 			final List<Integer> factors = PhaseRunner.run(new FactorizationPhase(configuration, combined), executionId, results);

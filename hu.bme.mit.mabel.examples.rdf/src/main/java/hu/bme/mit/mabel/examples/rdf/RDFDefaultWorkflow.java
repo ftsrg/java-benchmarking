@@ -21,22 +21,22 @@ public class RDFDefaultWorkflow {
 		doRun(configuration, factory);
 	}
 
-	private static <DatabaseConnection, QueryResult> void doRun(final RDFConfiguration configuration, RDFToolFactory<DatabaseConnection, QueryResult> factory) {
+	private static <DatabaseConnection, QueryResult> void doRun(final RDFConfiguration configuration, final RDFToolFactory<DatabaseConnection, QueryResult> factory) {
 		final Results results = new Results();
 		for (int run = 1; run <= configuration.getRuns(); run++) {
-			final ExecutionId executionId = new ExecutionId(run);
+			final ExecutionId executionId = new ExecutionId(factory.getName(), run);
 
 			final DatabaseConnection databaseConnectionEmpty = PhaseRunner.run(factory.createInitPhase(), executionId, results);
 			final DatabaseConnection databaseConnectionLoaded = PhaseRunner.run(factory.createLoadPhase(databaseConnectionEmpty, configuration.getModelPath()), executionId, results);
 
 			for (int query = 1; query <= configuration.getQueries(); query++) {
-				final ExecutionId queryExecutionId = new ExecutionId(run, query);
+				final ExecutionId queryExecutionId = new ExecutionId(factory.getName(), run, query);
 
 				final QueryPhase<DatabaseConnection, QueryResult> queryPhase = factory.createQueryPhase(databaseConnectionLoaded);
-				final List<QueryResult> bindingSets = PhaseRunner.run(queryPhase, queryExecutionId, results);
+				final List<QueryResult> queryResults = PhaseRunner.run(queryPhase, queryExecutionId, results);
 
 				factory.createQueryPhase(databaseConnectionLoaded);
-				final Metric<?> matches = new MatchesMetric(queryPhase, queryExecutionId, bindingSets.size());
+				final Metric<?> matches = new MatchesMetric(queryPhase, queryExecutionId, queryResults.size());
 				results.recordMetric(matches);
 			}
 		}
