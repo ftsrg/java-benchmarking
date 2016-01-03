@@ -16,6 +16,9 @@ import hu.bme.mit.mabel.metrics.Metric;
 
 public class RDFDefaultWorkflow {
 
+	static final String QUERY1 = "SELECT DISTINCT * WHERE {?s ?p ?o}";
+	static final String QUERY2 = "SELECT DISTINCT ?s WHERE {?s ?p ?o}";
+
 	public static void run(final RDFConfiguration configuration) {
 		final RDFToolFactory<?, ?> factory = configuration.getTool();
 		doRun(configuration, factory);
@@ -30,14 +33,19 @@ public class RDFDefaultWorkflow {
 			final DatabaseConnection databaseConnectionLoaded = PhaseRunner.run(factory.createLoadPhase(databaseConnectionEmpty, configuration.getModelPath()), executionId, results);
 
 			for (int query = 1; query <= configuration.getQueries(); query++) {
-				final ExecutionId queryExecutionId = new ExecutionId(run, query);
+				final ExecutionId query1ExecutionId = new ExecutionId(run, query, 1);
+				final QueryPhase<DatabaseConnection, QueryResult> query1Phase = factory.createQueryPhase(databaseConnectionLoaded, QUERY1);
+				final List<QueryResult> query1Results = PhaseRunner.run(query1Phase, query1ExecutionId, results);
 
-				final QueryPhase<DatabaseConnection, QueryResult> queryPhase = factory.createQueryPhase(databaseConnectionLoaded);
-				final List<QueryResult> queryResults = PhaseRunner.run(queryPhase, queryExecutionId, results);
+				final Metric<?> matches1 = new MatchesMetric(query1Phase, query1ExecutionId, query1Results.size());
+				results.recordMetric(matches1);
 
-				factory.createQueryPhase(databaseConnectionLoaded);
-				final Metric<?> matches = new MatchesMetric(queryPhase, queryExecutionId, queryResults.size());
-				results.recordMetric(matches);
+				final ExecutionId query2ExecutionId = new ExecutionId(run, query, 2);
+				final QueryPhase<DatabaseConnection, QueryResult> query2Phase = factory.createQueryPhase(databaseConnectionLoaded, QUERY2);
+				final List<QueryResult> query2Results = PhaseRunner.run(query2Phase, query2ExecutionId, results);
+
+				final Metric<?> matches2 = new MatchesMetric(query2Phase, query2ExecutionId, query2Results.size());
+				results.recordMetric(matches2);
 			}
 		}
 		System.out.print(results);

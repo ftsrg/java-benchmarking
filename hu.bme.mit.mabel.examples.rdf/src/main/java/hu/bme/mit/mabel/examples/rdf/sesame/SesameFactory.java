@@ -24,8 +24,8 @@ public class SesameFactory implements RDFToolFactory<RepositoryConnection, Bindi
 	}
 
 	@Override
-	public QueryPhase<RepositoryConnection, BindingSet> createQueryPhase(final RepositoryConnection databaseConnection) {
-		return new SesameQueryPhase(databaseConnection);
+	public QueryPhase<RepositoryConnection, BindingSet> createQueryPhase(final RepositoryConnection databaseConnection, final String query) {
+		return new SesameQueryPhase(databaseConnection, query);
 	}
 
 }

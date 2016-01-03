@@ -9,7 +9,7 @@ public class RDFBenchmark {
 
 	public static void main(final String[] args) throws IOException, InterruptedException {
 		for (final RDFTool tool : RDFTool.values()) {
-			final RDFConfiguration configuration = new RDFConfiguration(5, false, "src/main/resources/infoboxproperties_en.nt", 20, tool);
+			final RDFConfiguration configuration = new RDFConfiguration(5, false, "src/main/resources/infoboxproperties_en.nt", 40, tool);
 			RDFDefaultWorkflow.spawn(configuration);
 		}
 	}

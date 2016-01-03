@@ -13,8 +13,8 @@ import hu.bme.mit.mabel.examples.rdf.phases.QueryPhase;
 
 public class JenaQueryPhase extends QueryPhase<Model, QuerySolution> {
 
-	public JenaQueryPhase(final Model model) {
-		super(model);
+	public JenaQueryPhase(final Model model, final String query) {
+		super(model, query);
 	}
 
 	@Override

@@ -24,8 +24,8 @@ public class JenaFactory implements RDFToolFactory<Model, QuerySolution> {
 	}
 
 	@Override
-	public QueryPhase<Model, QuerySolution> createQueryPhase(final Model databaseConnection) {
-		return new JenaQueryPhase(databaseConnection);
+	public QueryPhase<Model, QuerySolution> createQueryPhase(final Model databaseConnection, final String query) {
+		return new JenaQueryPhase(databaseConnection, query);
 	}
 
 }

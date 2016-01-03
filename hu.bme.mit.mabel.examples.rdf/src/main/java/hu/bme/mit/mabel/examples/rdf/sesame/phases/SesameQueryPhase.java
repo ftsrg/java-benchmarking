@@ -13,8 +13,8 @@ import hu.bme.mit.mabel.examples.rdf.phases.QueryPhase;
 
 public class SesameQueryPhase extends QueryPhase<RepositoryConnection, BindingSet> {
 
-	public SesameQueryPhase(final RepositoryConnection repositoryConnection) {
-		super(repositoryConnection);
+	public SesameQueryPhase(final RepositoryConnection repositoryConnection, final String query) {
+		super(repositoryConnection, query);
 	}
 
 	@Override

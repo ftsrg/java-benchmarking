@@ -6,11 +6,12 @@ import hu.bme.mit.mabel.engine.Phase;
 
 public abstract class QueryPhase<DatabaseConnection, QueryResult> implements Phase<List<QueryResult>> {
 
-	protected final String query = "SELECT * WHERE {?s ?p ?o}";
+	protected final String query;
 	protected final DatabaseConnection databaseConnection;
 
-	public QueryPhase(final DatabaseConnection databaseConnection) {
+	public QueryPhase(final DatabaseConnection databaseConnection, final String query) {
 		this.databaseConnection = databaseConnection;
+		this.query = query;
 	}
 
 	@Override

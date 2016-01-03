@@ -10,6 +10,6 @@ public interface RDFToolFactory<DatabaseConnection, QueryResult> {
 
 	LoadPhase<DatabaseConnection> createLoadPhase(DatabaseConnection databaseConnection, String modelPath);
 
-	QueryPhase<DatabaseConnection, QueryResult> createQueryPhase(DatabaseConnection databaseConnection);
+	QueryPhase<DatabaseConnection, QueryResult> createQueryPhase(DatabaseConnection databaseConnection, String query);
 
 }
