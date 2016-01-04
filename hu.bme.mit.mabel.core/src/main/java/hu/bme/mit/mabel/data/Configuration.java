@@ -1,6 +1,10 @@
 package hu.bme.mit.mabel.data;
 
+import java.util.List;
+
 import org.kohsuke.args4j.Option;
+
+import com.google.common.collect.ImmutableList;
 
 /**
  * The input parameters of a benchmark workflow.
@@ -32,5 +36,9 @@ public abstract class Configuration {
 	}
 
 	public abstract String getSubject();
+
+	public List<String> getJvmArguments() {
+		return ImmutableList.of("-Xms2G", "-Xmx2G");
+	}
 
 }

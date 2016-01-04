@@ -20,41 +20,45 @@ public class WorkflowRunner {
 	 * Runs the <code>main</code> method of the given workflow {@link Class} with the given {@link Configuration}
 	 * in a separate JVM process.
 	 */
-	public static void spawn(Class<?> workflowClass, Configuration configuration) throws IOException, InterruptedException {
-		List<String> command = new ArrayList<>();
+	public static void spawn(final Class<?> workflowClass, final Configuration configuration) throws IOException, InterruptedException {
+		final List<String> command = new ArrayList<>();
 		command.add("java");
 
+		for (final String jvmArgument : configuration.getJvmArguments()) {
+			command.add(jvmArgument);
+		}
+
 		command.add("-cp");
-		String classPath = getJarPath(workflowClass);
+		final String classPath = getJarPath(workflowClass);
 		command.add(classPath);
 
-		String mainClassName = workflowClass.getName();
+		final String mainClassName = workflowClass.getName();
 		command.add(mainClassName);
 
-		List<String> args = getCommandLineArguments(configuration);
+		final List<String> args = getCommandLineArguments(configuration);
 		command.addAll(args);
 
-		ProcessBuilder processBuilder = new ProcessBuilder(command).inheritIO();
-		Process process = processBuilder.start();
+		final ProcessBuilder processBuilder = new ProcessBuilder(command).inheritIO();
+		final Process process = processBuilder.start();
 		process.waitFor();
 	}
 
-	private static String getJarPath(Class<?> workflowClass) throws IOException {
+	private static String getJarPath(final Class<?> workflowClass) throws IOException {
 		final Properties properties = new Properties();
 		final InputStream stream = workflowClass.getClassLoader().getResourceAsStream("maven.properties");
 		properties.load(stream);
-		String jarPath = properties.getProperty("jar.path");
+		final String jarPath = properties.getProperty("jar.path");
 		return jarPath;
 	}
 
-	private static List<String> getCommandLineArguments(Configuration configuration) {
-		List<String> result = new ArrayList<>();
-		CmdLineParser parser = new CmdLineParser(configuration);
-		for (OptionHandler<?> optionHandler : parser.getOptions()) {
-			OptionDef option = optionHandler.option;
+	private static List<String> getCommandLineArguments(final Configuration configuration) {
+		final List<String> result = new ArrayList<>();
+		final CmdLineParser parser = new CmdLineParser(configuration);
+		for (final OptionHandler<?> optionHandler : parser.getOptions()) {
+			final OptionDef option = optionHandler.option;
 			if (option instanceof NamedOptionDef) {
-				NamedOptionDef namedOption = (NamedOptionDef) option;
-				Object value = optionHandler.setter.asFieldSetter().getValue();
+				final NamedOptionDef namedOption = (NamedOptionDef) option;
+				final Object value = optionHandler.setter.asFieldSetter().getValue();
 				if (optionHandler instanceof BooleanOptionHandler) {
 					if (value == Boolean.TRUE) {
 						result.add(namedOption.name());

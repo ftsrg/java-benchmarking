@@ -16,9 +16,6 @@ import hu.bme.mit.mabel.metrics.Metric;
 
 public class RDFDefaultWorkflow {
 
-	static final String QUERY1 = "SELECT DISTINCT ?s1 WHERE {?s1 ?p1 ?o1 . ?s1 ?p2 ?o2 . FILTER (?p1 != ?p2)}";
-	static final String QUERY2 = "SELECT DISTINCT ?s WHERE {?s ?p ?o }";
-
 	public static void run(final RDFConfiguration configuration) {
 		final RDFToolFactory<?, ?> factory = configuration.getTool();
 		doRun(configuration, factory);
@@ -34,14 +31,14 @@ public class RDFDefaultWorkflow {
 
 			for (int query = 1; query <= configuration.getQueries(); query++) {
 				final ExecutionId query1ExecutionId = new ExecutionId(run, query, 1);
-				final QueryPhase<DatabaseConnection, QueryResult> query1Phase = factory.createQueryPhase(databaseConnectionLoaded, QUERY1);
+				final QueryPhase<DatabaseConnection, QueryResult> query1Phase = factory.createQueryPhase(databaseConnectionLoaded, configuration.getQuery1());
 				final List<QueryResult> query1Results = PhaseRunner.run(query1Phase, query1ExecutionId, results);
 
 				final Metric<?> matches1 = new MatchesMetric(query1Phase, query1ExecutionId, query1Results.size());
 				results.recordMetric(matches1);
 
 				final ExecutionId query2ExecutionId = new ExecutionId(run, query, 2);
-				final QueryPhase<DatabaseConnection, QueryResult> query2Phase = factory.createQueryPhase(databaseConnectionLoaded, QUERY2);
+				final QueryPhase<DatabaseConnection, QueryResult> query2Phase = factory.createQueryPhase(databaseConnectionLoaded, configuration.getQuery2());
 				final List<QueryResult> query2Results = PhaseRunner.run(query2Phase, query2ExecutionId, results);
 
 				final Metric<?> matches2 = new MatchesMetric(query2Phase, query2ExecutionId, query2Results.size());

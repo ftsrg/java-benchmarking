@@ -11,6 +11,9 @@ import hu.bme.mit.mabel.examples.rdf.sesame.SesameFactory;
 
 public class RDFConfiguration extends Configuration {
 
+	protected final String query1 = "SELECT DISTINCT ?s1 WHERE {?s1 ?p1 ?o1 . ?s1 ?p2 ?o2 . FILTER (?p1 != ?p2)}";
+	protected final String query2 = "SELECT DISTINCT ?s WHERE {?s ?p ?o }";
+
 	@Option(name = "-model", required = true, usage = "path to the RDF model")
 	private String modelPath;
 
@@ -58,6 +61,14 @@ public class RDFConfiguration extends Configuration {
 	@Override
 	public String getSubject() {
 		return tool.toString();
+	}
+
+	public String getQuery1() {
+		return query1;
+	}
+
+	public String getQuery2() {
+		return query2;
 	}
 
 }
