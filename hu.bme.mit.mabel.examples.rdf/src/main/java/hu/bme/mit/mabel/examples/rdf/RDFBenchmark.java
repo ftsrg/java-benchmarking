@@ -9,8 +9,10 @@ public class RDFBenchmark {
 
 	public static void main(final String[] args) throws IOException, InterruptedException {
 		for (final RDFTool tool : RDFTool.values()) {
-			final RDFConfiguration configuration = new RDFConfiguration(5, false, 1, 1, tool);
-			RDFDefaultWorkflow.spawn(configuration);
+			for (int modelSize = 1; modelSize <= 128; modelSize *= 2) {
+				final RDFConfiguration configuration = new RDFConfiguration(5, false, modelSize, 25, tool);
+				RDFDefaultWorkflow.spawn(configuration);
+			}
 		}
 	}
 
