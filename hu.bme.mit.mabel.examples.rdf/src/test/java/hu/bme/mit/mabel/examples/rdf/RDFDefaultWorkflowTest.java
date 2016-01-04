@@ -9,13 +9,13 @@ public class RDFDefaultWorkflowTest {
 
 	@Test
 	public void testJena() {
-		final RDFConfiguration configuration = new RDFConfiguration(2, true, "models/infoboxproperties_en.nt", 2, RDFTool.JENA);
+		final RDFConfiguration configuration = new RDFConfiguration(2, true, 1, 2, RDFTool.JENA);
 		RDFDefaultWorkflow.run(configuration);
 	}
 
 	@Test
 	public void testSesame() {
-		final RDFConfiguration configuration = new RDFConfiguration(2, true, "models/infoboxproperties_en.nt", 2, RDFTool.SESAME);
+		final RDFConfiguration configuration = new RDFConfiguration(2, true, 1, 2, RDFTool.SESAME);
 		RDFDefaultWorkflow.run(configuration);
 	}
 

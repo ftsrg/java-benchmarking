@@ -37,6 +37,8 @@ public abstract class Configuration {
 
 	public abstract String getSubject();
 
+	public abstract String getArtifact();
+
 	public List<String> getJvmArguments() {
 		return ImmutableList.of("-Xms2G", "-Xmx2G");
 	}

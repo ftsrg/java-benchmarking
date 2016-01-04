@@ -41,8 +41,4 @@ public abstract class Metric<TValue> {
 		return executionId;
 	}
 
-	public static String getHeader() {
-		return "Subject,Run,Id,Phase,Metric,Value\n";
-	}
-
 }

@@ -17,7 +17,7 @@ public class SesameLoadPhase extends LoadPhase<RepositoryConnection> {
 	@Override
 	public RepositoryConnection run() throws IOException {
 		final File modelFile = new File(modelPath);
-		databaseConnection.add(modelFile, null, RDFFormat.NTRIPLES);
+		databaseConnection.add(modelFile, null, RDFFormat.TURTLE);
 		return databaseConnection;
 	}
 

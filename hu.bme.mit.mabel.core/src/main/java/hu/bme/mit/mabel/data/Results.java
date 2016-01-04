@@ -29,8 +29,9 @@ public class Results {
 	public String toString() {
 		String results = "";
 		for (final Metric<?> metric : metrics) {
-			results += String.format("%s,%d,%s,%s,%s,%d",
+			results += String.format("%s,%s,%d,%s,%s,%s,%d",
 					configuration.getSubject(),
+					configuration.getArtifact(),
 					metric.getExecutionId().getRun(),
 					metric.getPhaseName(),
 					metric.getExecutionId().getPhaseInstanceIdString(),

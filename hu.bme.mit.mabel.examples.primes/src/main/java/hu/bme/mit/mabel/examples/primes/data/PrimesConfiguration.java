@@ -50,4 +50,9 @@ public class PrimesConfiguration extends Configuration {
 		return "Naive";
 	}
 
+	@Override
+	public String getArtifact() {
+		return "";
+	}
+
 }
