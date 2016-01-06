@@ -8,7 +8,7 @@ import com.google.common.base.Joiner;
 import hu.bme.mit.mabel.engine.Phase;
 
 /**
- * Uniquely identifies the execution of a {@link Phase}.
+ * Uniquely identifies the execution of a {@link Phase} within a workflow execution.
  */
 public class ExecutionId {
 
